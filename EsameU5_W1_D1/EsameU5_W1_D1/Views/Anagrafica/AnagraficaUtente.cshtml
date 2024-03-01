@@ -1,0 +1,57 @@
+﻿@model IEnumerable<EsameU5_W1_D1.Models.Anagrafica>
+
+@{
+    ViewBag.Title = "AnagraficaUtente";
+}
+
+<h2>AnagraficaUtente</h2>
+
+<p>
+    @Html.ActionLink("Create New", "Anagrafica", "Home")
+</p>
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.Cognome)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.NomeUtente)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Indirizzo)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Città)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Cod_fisc)
+        </th>
+        <th></th>
+    </tr>
+
+@foreach (var item in Model) {
+    <tr>
+        <td>
+            @Html.DisplayFor(modelItem => item.Cognome)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.NomeUtente)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Indirizzo)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Città)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Cod_fisc)
+        </td>
+        <td>
+            @Html.ActionLink("Edit", "Edit", new { /* id=item.PrimaryKey */ }) |
+            @Html.ActionLink("Details", "Details", new { /* id=item.PrimaryKey */ }) |
+            @Html.ActionLink("Delete", "Delete", new { /* id=item.PrimaryKey */ })
+        </td>
+    </tr>
+}
+
+</table>
