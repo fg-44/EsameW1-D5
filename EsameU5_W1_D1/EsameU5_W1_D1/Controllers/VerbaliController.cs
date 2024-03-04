@@ -12,7 +12,7 @@ using static System.Net.Mime.MediaTypeNames;
 
 namespace EsameU5_W1_D1.Controllers
 {
-    public class VerbaleController : Controller
+    public class VerbaliController : Controller
     {
         // GET: Verbale
         static SqlConnection conn = new SqlConnection(ConfigurationManager.ConnectionStrings["DbViolazioni"].ConnectionString.ToString());
@@ -23,9 +23,10 @@ namespace EsameU5_W1_D1.Controllers
         }
 
         //VISUALIZAZIONE VERBALE------------------------------------------------
-        public ActionResult Verbali (string id, bool? punti, bool? importo) 
+
+        public ActionResult Verbali()
         {
-            List<Verbale> listaVerbali = new List<Verbale>();
+            List<Verbali> listaVerbali = new List<Verbali>();
 
             try
             {
@@ -34,7 +35,7 @@ namespace EsameU5_W1_D1.Controllers
                 SqlDataReader sqlDataReader = cmd.ExecuteReader();
 
                 while (sqlDataReader.Read())
-                    listaVerbali.Add(new Verbale()
+                    listaVerbali.Add(new Verbali()
                     {
                         Descrizione = sqlDataReader["Descrizione"].ToString(),
                         DataViolazione = DateTime.Parse(sqlDataReader["DataViolazione"].ToString()),
@@ -43,8 +44,8 @@ namespace EsameU5_W1_D1.Controllers
                         DataTrascrizioneVerbale = DateTime.Parse(sqlDataReader["DataTrascrizioneVerbale"].ToString()),
                         Importo = Decimal.Parse(sqlDataReader["Importo"].ToString()),
                         DecurtamentoPunti = Int32.Parse(sqlDataReader["DecurtamentoPunti"].ToString()),
-          
-            });
+
+                    });
                 conn.Close();
             }
             catch
@@ -105,9 +106,8 @@ namespace EsameU5_W1_D1.Controllers
         }
 
         // ----------- //
-
         [HttpPost]
-        public ActionResult CreareVerbale(Verbale verbale)
+        public ActionResult CreareVerbale(Verbali verbali)
         {
             //IMPORTA DA ALTRE TABELLE//
             ViewBag.Tipologie = new List<ViolazioniVerbale>();
@@ -116,15 +116,15 @@ namespace EsameU5_W1_D1.Controllers
             try
             {
                 conn.Open();
-                SqlCommand cmd = new SqlCommand("INSERT INTO Verbale VALUES(@Descrizione, @DataViolazione , @IndirizzoViolazione, @NominativoAgente, @DataTrascrizioneVerbale, @Importo, @DecurtamentoPunti)", conn);
-                
-                cmd.Parameters.AddWithValue("Descrizione", verbale.Descrizione);
-                cmd.Parameters.AddWithValue("DataViolazione ", verbale.DataViolazione);
-                cmd.Parameters.AddWithValue("IndirizzoViolazione", verbale.IndirizzoViolazione);
-                cmd.Parameters.AddWithValue("NominativoAgente", verbale.NominativoAgente);
-                cmd.Parameters.AddWithValue("DataTrascrizioneVerbale", verbale.DataTrascrizioneVerbale);
-                cmd.Parameters.AddWithValue("Importo", verbale.Importo);
-                cmd.Parameters.AddWithValue("DecurtamentoPunti", verbale.DecurtamentoPunti);
+                SqlCommand cmd = new SqlCommand("INSERT INTO Verbali VALUES(@Descrizione, @DataViolazione , @IndirizzoViolazione, @NominativoAgente, @DataTrascrizioneVerbale, @Importo, @DecurtamentoPunti)", conn);
+
+                cmd.Parameters.AddWithValue("Descrizione", verbali.Descrizione);
+                cmd.Parameters.AddWithValue("DataViolazione ", verbali.DataViolazione);
+                cmd.Parameters.AddWithValue("IndirizzoViolazione", verbali.IndirizzoViolazione);
+                cmd.Parameters.AddWithValue("NominativoAgente", verbali.NominativoAgente);
+                cmd.Parameters.AddWithValue("DataTrascrizioneVerbale", verbali.DataTrascrizioneVerbale);
+                cmd.Parameters.AddWithValue("Importo", verbali.Importo);
+                cmd.Parameters.AddWithValue("DecurtamentoPunti", verbali.DecurtamentoPunti);
 
 
                 cmd.ExecuteNonQuery();
@@ -132,7 +132,7 @@ namespace EsameU5_W1_D1.Controllers
                 //------------------------
                 //IMPORTA DATI  VIOLAZIONI
 
-         
+
                 cmd = new SqlCommand("SELECT * FROM Violazioni", conn);
                 SqlDataReader sqlDataReader = cmd.ExecuteReader();
                 while (sqlDataReader.Read())

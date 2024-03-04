@@ -5,7 +5,7 @@ using System.Web;
 
 namespace EsameU5_W1_D1.Models
 {
-    public class Verbale
+    public class Verbali
     {
            
         public string Descrizione { get; set; }

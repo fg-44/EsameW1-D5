@@ -33,7 +33,7 @@ namespace EsameU5_W1_D1.Controllers
             return View();
         }
 
-        public ActionResult Verbale()
+        public ActionResult Verbali()
         {
 
             return View();
